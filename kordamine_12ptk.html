@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12. peatükk - Tehisintellekt tervishoius. Kordamisküsimused. </title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fdf7fb;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 960px;
+      margin: 24px auto;
+      padding: 16px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      padding: 24px 20px;
+      margin-bottom: 20px;
+    }
+    .card.hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      background: linear-gradient(135deg, #e6007e, #7a003c);
+      color: #ffffff;
+    }
+    .hero-logo {
+      background: rgba(255,255,255,0.9);
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .hero-logo img {
+      height: 60px;
+      max-width: 160px;
+      display: block;
+      object-fit: contain;
+    }
+    .hero-text {
+      flex: 1 1 220px;
+      min-width: 0;
+    }
+    h1 {
+      text-align: left;
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 28px;
+    }
+    .intro {
+      margin: 0;
+      color: #f9e6f3;
+    }
+    .card:not(.hero) h1 {
+      text-align: center;
+    }
+    .card:not(.hero) .intro {
+      text-align: center;
+      margin-bottom: 16px;
+      color: #444;
+    }
+    .question {
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #f0d3ea;
+    }
+    .question:last-of-type {
+      border-bottom: none;
+    }
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #7a003c;
+    }
+    .options {
+      margin-left: 8px;
+    }
+    .option {
+      margin: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      cursor: pointer;
+    }
+    .option input {
+      margin-right: 8px;
+      margin-top: 3px;
+    }
+    .feedback {
+      margin-top: 6px;
+      font-size: 14px;
+      padding-left: 24px;
+    }
+    .feedback.correct {
+      color: #0a7a39;
+      font-weight: 600;
+    }
+    .feedback.incorrect {
+      color: #b00020;
+      font-weight: 600;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+    button {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      background: #e6007e;
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(230, 0, 126, 0.35);
+      transition: all 0.2s ease;
+    }
+    button:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    button.secondary {
+      background: #f3e5ef;
+      color: #43112d;
+      box-shadow: none;
+    }
+    .score {
+      text-align: center;
+      margin-top: 10px;
+      font-weight: 600;
+      color: #43112d;
+      min-height: 24px;
+    }
+    .block-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-align: center;
+      color: #7a003c;
+      border-bottom: 2px solid #f3e5ef;
+      padding-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card hero">
+      <div class="hero-logo">
+        <!-- Kasutan asenduspilti, et see eelvaates töötaks. Asenda 'taltech_logo.png' vajadusel oma failiga -->
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5a/Tallinn_University_of_Technology_logo.svg/1200px-Tallinn_University_of_Technology_logo.svg.png" 
+             alt="TalTech logo" 
+             onerror="this.src='https://placehold.co/160x60?text=TalTech+Logo'">
+      </div>
+      <div class="hero-text">
+        <h1>12. peatükk - Tehisintellekt tervishoius. Kordamisküsimused</h1>
+        <p class="intro">Vali igale küsimusele sobivad vastused. Mõnel küsimusel on üks õige vastus, mõnel mitu.</p>
+      </div>
+    </div>
+
+      <div class="question" data-qid="17">
+        <div class="question-title">1. Kuidas erineb masinõpe tavalisest "kui-siis" programmeerimisest?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q17" value="a"> A) Masinõpe on lihtsalt kiirem kalkulaator, mis järgib täpselt inimese kirjutatud reegleid.</label>
+          <label class="option"><input type="radio" name="q17" value="b" data-correct="true"> B) Tavaline programm vajab retsepti, masinõpe aga vaatab tuhandeid torte ja mõtleb retsepti ise välja (õpib andmetest mustreid).</label>
+          <label class="option"><input type="radio" name="q17" value="c"> C) Masinõpe töötab ainult siis, kui robot on ruumis füüsiliselt kohal.</label>
+          <label class="option"><input type="radio" name="q17" value="d"> D) Erinevust polegi, mõlemad on lihtsalt turundusterminid.</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="18">
+        <div class="question-title">2. Kujuta ette meditsiinitudengit, kes valmistub eksamiks, lahendades vanu teste, millel on õiged vastused taga. Millist masinõppe tüüpi see meenutab?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q18" value="a"> A) Juhendamata õpe (Unsupervised learning) – keegi ei ütle talle, mis on õige.</label>
+          <label class="option"><input type="radio" name="q18" value="b"> B) Tugevdusõpe (Reinforcement learning) – ta saab iga vale vastuse eest elektrilöögi.</label>
+          <label class="option"><input type="radio" name="q18" value="c" data-correct="true"> C) Juhendatud õpe (Supervised learning) – tal on andmed (küsimused) ja sildid (õiged vastused), mille põhjal õppida.</label>
+          <label class="option"><input type="radio" name="q18" value="d"> D) Sügavõpe (Deep learning) – ta loeb raamatut une pealt.</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="19">
+        <div class="question-title">3. Sinu loodud TI-mudel suutis treeningul diagnoosida 100% patsientidest õigesti, aga kui haiglasse saabus uus patsient, pani mudel täiesti mööda. Mis juhtus?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q19" value="a"> A) Alaõppimine (Underfitting) – mudel oli liiga loll.</label>
+          <label class="option"><input type="radio" name="q19" value="b" data-correct="true"> B) Üleõppimine (Overfitting) – mudel "tuupis" treeningandmed koos müraga pähe, ega saanud tegelikust loogikast aru.</label>
+          <label class="option"><input type="radio" name="q19" value="c"> C) Mudel oli liiga väsinud.</label>
+          <label class="option"><input type="radio" name="q19" value="d"> D) See ongi normaalne, TI ei peagi uute andmetega töötama.</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="20">
+        <div class="question-title">4. Arst soovib lihtsat tööriista, mis ütleb patsiendi analüüside põhjal kas JAH (kõrge risk) või EI (madal risk). Milline klassikaline mudel sobib selleks kõige paremini, joonistades klasside vahele piiri?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q20" value="a" data-correct="true"> A) Logistiline regressioon.</label>
+          <label class="option"><input type="radio" name="q20" value="b"> B) Lineaarne regressioon (see ennustab pigem numbreid, mitte jah/ei).</label>
+          <label class="option"><input type="radio" name="q20" value="c"> C) ChatGPT (see hakkaks patsiendiga luuletustest rääkima).</label>
+          <label class="option"><input type="radio" name="q20" value="d"> D) Juhendamata klastrid (see ei tea, mis on "risk").</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="21">
+        <div class="question-title">5. Miks eelistavad arstid sageli otsustuspuud (Decision Tree) keerulisele "mustale kastile"?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q21" value="a"> A) Sest see on ilus ja roheline.</label>
+          <label class="option"><input type="radio" name="q21" value="b" data-correct="true"> B) Sest see töötab nagu vooskeem: on selgelt näha, milliste küsimuste (nt "Kas vanus > 50?") kaudu otsuseni jõuti.</label>
+          <label class="option"><input type="radio" name="q21" value="c"> C) Sest see ei eksi kunagi.</label>
+          <label class="option"><input type="radio" name="q21" value="d"> D) Sest see on ainus mudel, mis töötab Windows 95 peal.</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="22">
+        <div class="question-title">6. Üksik otsustuspuu võib olla ebakindel. Kuidas "Juhuslik Mets" (Random Forest) selle probleemi lahendab?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q22" value="a"> A) Ta istutab puid juurde, et oleks ilusam.</label>
+          <label class="option"><input type="radio" name="q22" value="b" data-correct="true"> B) See on nagu arstide konsiilium – sadade erinevate puude arvamus liidetakse kokku, et saada kindlam ja täpsem otsus.</label>
+          <label class="option"><input type="radio" name="q22" value="c"> C) Ta kustutab kõik valed vastused automaatselt ära.</label>
+          <label class="option"><input type="radio" name="q22" value="d"> D) Ta kasutab ainult kõige vanemaid puid.</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="23">
+        <div class="question-title">7. Milline tehnoloogia on parim valik, kui on vaja analüüsida röntgenpilte, et leida sealt kasvajaid või murde?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q23" value="a"> A) Exceli tabelarvutus.</label>
+          <label class="option"><input type="radio" name="q23" value="b"> B) Keelemudelid (LLM).</label>
+          <label class="option"><input type="radio" name="q23" value="c" data-correct="true"> C) Konvolutsioonilised närvivõrgud (CNN), mis skaneerivad pilti filtritega ja otsivad mustreid.</label>
+          <label class="option"><input type="radio" name="q23" value="d"> D) Logistiline regressioon.</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="24">
+        <div class="question-title">8. Kuidas aitab TI-põhine poosituvastus (nagu OpenPose või MediaPipe) taastusravis?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q24" value="a"> A) See sunnib patsienti rohkem pingutama.</label>
+          <label class="option"><input type="radio" name="q24" value="b" data-correct="true"> B) See joonistab videopildile patsiendi "skeleti" ja kontrollib, kas ta teeb harjutusi õige amplituudiga, ilma et terapeut peaks kõrval seisma.</label>
+          <label class="option"><input type="radio" name="q24" value="c"> C) See asendab täielikult vajaduse liigutada.</label>
+          <label class="option"><input type="radio" name="q24" value="d"> D) See teeb patsiendist ilusaid Instagrami pilte.</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="25">
+        <div class="question-title">9. Miks on mudelid nagu ChatGPT (Transformerid) nii erilised võrreldes varasematega?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q25" value="a"> A) Nad oskavad lugeda ainult ühte sõna korraga.</label>
+          <label class="option"><input type="radio" name="q25" value="b" data-correct="true"> B) Nad kasutavad "tähelepanumehhanismi" (Attention), et mõista sõnadevahelisi seoseid ja konteksti üle pika teksti, mitte ei vaata sõnu ükshaaval.</label>
+          <label class="option"><input type="radio" name="q25" value="c"> C) Nad on ühendatud otse inimajuga.</label>
+          <label class="option"><input type="radio" name="q25" value="d"> D) Nad ei tee kunagi faktivigu.</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="26">
+        <div class="question-title">10. Suur keelemudel väidab veenvalt, et "Ibuprofeen on parim ravim luumurdude kokkukasvatamiseks", kuigi see pole tõsi. Kuidas seda nähtust nimetatakse?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q26" value="a"> A) Kreatiivne kirjutamine.</label>
+          <label class="option"><input type="radio" name="q26" value="b" data-correct="true"> B) Hallutsinatsioon – mudel genereerib enesekindlalt valeinfot, sest see tundub statistiliselt tõenäoline.</label>
+          <label class="option"><input type="radio" name="q26" value="c"> C) Üleõppimine.</label>
+          <label class="option"><input type="radio" name="q26" value="d"> D) Andmekaitse rikkumine.</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="question" data-qid="27">
+        <div class="question-title">11. Mis on peamine põhjus, miks iga tervishoiutöötaja peaks teadma natuke tehisintellektist (TI kirjaoskus)?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q27" value="a"> A) Et nad saaksid ise keerulisi koode kirjutada.</label>
+          <label class="option"><input type="radio" name="q27" value="b" data-correct="true"> B) Et nad ei kardaks, vaid oskaksid TI-d kasutada kui "tarka pilooti" oma töös, mõistes nii selle supervõimeid kui ka ohtusid.</label>
+          <label class="option"><input type="radio" name="q27" value="c"> C) Sest TI asendab varsti kõik arstid ja õed.</label>
+          <label class="option"><input type="radio" name="q27" value="d"> D) Et osata parandada haigla printereid.</label>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="controls">
+        <button type="button" onclick="checkBlock('block2')">Kontrolli vastuseid</button>
+        <button type="button" class="secondary" onclick="resetBlock('block2')">Tühjenda vastused</button>
+      </div>
+      <div class="score" id="score-block2"></div>
+    </div>
+
+    <div class="card">
+      <div class="controls">
+        <button type="button" onclick="checkAll()">Kontrolli kogu testi</button>
+        <button type="button" class="secondary" onclick="resetAll()">Tühjenda kogu test</button>
+      </div>
+      <div class="score" id="score-all"></div>
+    </div>
+  </div>
+
+  <script>
+    function evaluateQuestion(questionEl) {
+      const inputs = questionEl.querySelectorAll('input');
+      const feedback = questionEl.querySelector('.feedback');
+      let anySelected = false;
+      let allCorrect = true;
+
+      inputs.forEach(function (input) {
+        if (input.type === 'radio') {
+          if (input.checked) {
+            anySelected = true;
+            if (!input.dataset.correct) {
+              allCorrect = false;
+            }
+          }
+        } else if (input.type === 'checkbox') {
+          if (input.checked) {
+            anySelected = true;
+            if (!input.dataset.correct) {
+              allCorrect = false;
+            }
+          }
+          // For checkbox, we must also ensure all correct options are checked
+          if (input.dataset.correct && !input.checked) {
+            allCorrect = false;
+          }
+        }
+      });
+
+      if (!anySelected) {
+        feedback.textContent = 'Vali palun vastus(ed).';
+        feedback.className = 'feedback';
+        return false;
+      }
+
+      // Special check for checkboxes: if anySelected is true, but not ALL correct ones are selected
+      // logic above handles incorrect checks, but we also need to check if we missed any correct ones.
+      // Actually the loop above: `if (input.dataset.correct && !input.checked) { allCorrect = false; }` handles missing correct ones.
+
+      if (allCorrect) {
+        feedback.textContent = 'Õige!';
+        feedback.className = 'feedback correct';
+        return true;
+      } else {
+        feedback.textContent = 'Siin on veel ruumi parandusteks.';
+        feedback.className = 'feedback incorrect';
+        return false;
+      }
+    }
+
+    function checkBlock(blockId) {
+      const block = document.getElementById(blockId);
+      const questions = block.querySelectorAll('.question');
+      let correctCount = 0;
+      questions.forEach(function (q) {
+        if (evaluateQuestion(q)) {
+          correctCount = correctCount + 1;
+        }
+      });
+      const scoreEl = document.getElementById('score-' + blockId);
+      scoreEl.textContent = 'Said selles osas ' + correctCount + ' / ' + questions.length + ' punkti.';
+    }
+
+    function resetBlock(blockId) {
+      const block = document.getElementById(blockId);
+      const inputs = block.querySelectorAll('input');
+      inputs.forEach(function (input) {
+        input.checked = false;
+      });
+      const feedbacks = block.querySelectorAll('.feedback');
+      feedbacks.forEach(function (fb) {
+        fb.textContent = '';
+        fb.className = 'feedback';
+      });
+      const scoreEl = document.getElementById('score-' + blockId);
+      if (scoreEl) {
+        scoreEl.textContent = '';
+      }
+    }
+
+    function checkAll() {
+      checkBlock('block1');
+      checkBlock('block2');
+      
+      // Calculate totals based on the result texts or re-calculate
+      const block1 = document.getElementById('block1');
+      const block2 = document.getElementById('block2');
+      
+      let totalCorrect = 0;
+      let totalQuestions = 0;
+
+      [block1, block2].forEach(block => {
+         const questions = block.querySelectorAll('.question');
+         totalQuestions += questions.length;
+         questions.forEach(q => {
+            // We re-evaluate to get the boolean state, assuming checkBlock was just run and state is visible
+            // But evaluateQuestion is idempotent regarding scoring logic
+             const inputs = q.querySelectorAll('input');
+             let allCorrect = true;
+             let anySelected = false;
+             
+             inputs.forEach(input => {
+                if(input.checked) anySelected = true;
+                if(input.type === 'radio' && input.checked && !input.dataset.correct) allCorrect = false;
+                if(input.type === 'checkbox') {
+                    if(input.checked && !input.dataset.correct) allCorrect = false;
+                    if(!input.checked && input.dataset.correct) allCorrect = false;
+                }
+             });
+             
+             if(anySelected && allCorrect) totalCorrect++;
+         });
+      });
+
+      const scoreAll = document.getElementById('score-all');
+      scoreAll.textContent = 'Kokku: ' + totalCorrect + ' / ' + totalQuestions + ' punkti.';
+    }
+
+    function resetAll() {
+      resetBlock('block1');
+      resetBlock('block2');
+      const scoreAll = document.getElementById('score-all');
+      scoreAll.textContent = '';
+    }
+  </script>
+</body>
+</html>
